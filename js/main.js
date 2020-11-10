@@ -5,11 +5,22 @@ const search = document.querySelector('.search'),
   goodsWrapper = document.querySelector('.goods-wrapper'),
   cart = document.querySelector('.cart'),
   cartClose = document.querySelector('.cart-close'),
-  category = document.querySelector('.category');
+  category = document.querySelector('.category'),
+  spinner = document.querySelector('#spinner');
 
+
+const loading = () => {
+
+  const spinner = `
+    <div id="spinner"><div class="spinner-loading"><div><div><div></div>
+    </div><div><div></div></div><div><div></div></div><div><div></div></div></div></div></div>
+  `;
+  
+  goodsWrapper.insertAdjacentHTML('afterbegin', spinner);
+}
 
 const getGoods = (handler, filter) => {
-
+  loading();
   fetch('db/db.json')
       .then(resp => {
         
@@ -21,7 +32,7 @@ const getGoods = (handler, filter) => {
       })
       .then(filter)
       .then(handler);
-
+  
 };
 
 
@@ -75,7 +86,6 @@ const closeCart = (e) => {
 
 
 const renderCard = (item) => {
-  goodsWrapper.textContent = '';
 
   item.forEach((item) => {
     createCardGoods(item)
